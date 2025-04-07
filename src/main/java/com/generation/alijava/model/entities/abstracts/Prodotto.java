@@ -52,6 +52,13 @@ public abstract class Prodotto extends BaseEntity
 	{
 		return prezzoUnitario * (1-getSconto());
 	}
+
+	//la quantità rimanente è uguale  a quella iniziale meno il totale dei prodotti nei carrelli
+	//degli ItemCarrello
+	public int getQuantitaRimanente()
+	{
+		return 0;
+	}
 }
 
 
