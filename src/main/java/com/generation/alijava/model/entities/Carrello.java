@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+//commento di prova
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
