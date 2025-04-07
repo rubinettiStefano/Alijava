@@ -16,6 +16,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+//commento di prova
+
+
+//mannaggina cambiamento
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
