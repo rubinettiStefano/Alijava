@@ -59,6 +59,7 @@ public class Carrello extends BaseEntity
 			items.remove(i);
 	}
 
+
 	public double getTotale()
 	{
 		return items.stream().mapToDouble(i -> i.getTotaleProdotto()).sum();
