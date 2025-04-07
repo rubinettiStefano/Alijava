@@ -55,9 +55,11 @@ public abstract class Prodotto extends BaseEntity
 
 	//la quantità rimanente è uguale  a quella iniziale meno il totale dei prodotti nei carrelli
 	//degli ItemCarrello
-	public int getQuantitaRimanente()
-	{
-		return 0;
+	public int getQuantitaRimanente() {
+		int totaleNelCarrello = items.stream()
+				.mapToInt(i -> i.getQnt())
+				.sum();
+		return qnt - totaleNelCarrello;
 	}
 }
 
