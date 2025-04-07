@@ -1,4 +1,4 @@
-package com.generation.alijava.model.entities;
+package com.generation.alijava.model.entities.abstracts;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

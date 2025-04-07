@@ -1,6 +1,6 @@
 package com.generation.alijava.model.entities.enums;
 
-public enum Tipologia
+public enum TipologiaCibo
 {
 	DESSERT,
 	SNACK,
