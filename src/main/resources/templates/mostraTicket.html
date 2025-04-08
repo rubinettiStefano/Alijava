@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+</head>
+<body>
+    <div th:replace="fragments :: navbar"></div>
+
+
+    <div class="row w-100 pt-4 ps-3">
+        <div th:if="${t.size()==0}" ><h1 class="text-center mx-auto mt-5">Non sono presenti Ticket.</h1></div>
+
+        <div class="col-4" th:each="tick : ${t}">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${tick.titolo}"></h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${tick.email}"></h6>
+                    <p class="card-text" th:text="${tick.contenuto}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+</body>
+</html>
