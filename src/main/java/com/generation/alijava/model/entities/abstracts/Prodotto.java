@@ -58,7 +58,8 @@ public abstract class Prodotto extends BaseEntity
 	//degli ItemCarrello
 	public int getQuantitaRimanente()
 	{
-		return qnt-items.stream().mapToInt(i->i.getQnt()).sum();
+		int dif = items.stream().mapToInt(i->i.getQnt()).sum();
+		return qnt - dif;
 	}
 
 	public String tipoConcreto()

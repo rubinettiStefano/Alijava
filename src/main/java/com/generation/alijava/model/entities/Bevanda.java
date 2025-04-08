@@ -24,3 +24,4 @@ public class Bevanda extends Prodotto
 	private TipologiaBevanda tipologiaBevanda;
 	private int volume;//ml
 }
+//salamini beretta. Spariscono in fretta
