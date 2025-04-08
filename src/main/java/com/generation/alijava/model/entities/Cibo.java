@@ -25,4 +25,9 @@ public class Cibo extends Prodotto
 	private TipologiaCibo tipologiaCibo;
 	@Enumerated(EnumType.STRING)
 	private Conservazione conservazione;
+
+	public String getStampaEnum()
+	{
+		return conservazione.getNomeStampabile();
+	}
 }

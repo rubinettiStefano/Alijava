@@ -61,6 +61,11 @@ public abstract class Prodotto extends BaseEntity
 		int dif = items.stream().mapToInt(i->i.getQnt()).sum();
 		return qnt - dif;
 	}
+
+	public String tipoConcreto()
+	{
+		return this.getClass().getSimpleName();
+	}
 }
 
 
