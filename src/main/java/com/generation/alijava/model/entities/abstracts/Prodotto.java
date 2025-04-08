@@ -23,6 +23,7 @@ public abstract class Prodotto extends BaseEntity
 {
 	private String nome;
 	private String descrizione;
+	private String imgUrl;
 	private double prezzoUnitario;
 	private int qnt;
 
@@ -57,7 +58,7 @@ public abstract class Prodotto extends BaseEntity
 	//degli ItemCarrello
 	public int getQuantitaRimanente()
 	{
-		return 0;
+		return qnt-items.stream().mapToInt(i->i.getQnt()).sum();
 	}
 }
 
