@@ -29,7 +29,7 @@
             <input name="min"   type="range" class="form-range" min="0" max="20" id="customRange3" th:value="${min!=null ? min : 0}">
             <!-- Mettere qui dentro un input  per scegliere nome  -->
             <div class="input-group mb-3">
-                <span class="input-group-text">Nome</span>
+                <span class="input-group-text">Nome </span>
                 <div class="form-floating">
                     <input name="k" type="text" class="form-control" id="floatingInputGroup1" th:value="${k}">
                     <label for="floatingInputGroup1">Nome prodotto</label>
@@ -45,24 +45,6 @@
             </div>
             <input class="btn btn-primary mt-3" type="submit" value="Applica Filtri">
             <input class="btn btn-primary mt-3 ms-3" type="submit" name="clear" value="Clear">
-
-        </form>
-
-            <!-- Input per il Nome -->
-            <label for="nome" class="form-label mt-3">Nome:</label>
-            <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome">
-
-            <!-- Checkbox per le Offerte -->
-            <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" id="offerta" name="offerta" value="1">
-                <label class="form-check-label" for="offerta">
-                    Solo offerte
-                </label>
-            </div>
-
-            <!-- Pulsante di invio -->
-            <button type="submit" class="btn btn-primary mt-3">Applica filtri</button>
-        </form>
     </div>
 
 
