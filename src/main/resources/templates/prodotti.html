@@ -16,10 +16,23 @@
     <div class="col-3 bg-gray">
         <h2>FILTRI</h2>
         <form>
-            <!-- Mettere qui dentro uno slider per scegliere prezzoMax tra 0 e 100  -->
-            <!-- Mettere qui dentro uno slider per scegliere prezzoMin tra 0 e 100  -->
-            <!-- Mettere qui dentro un input  per scegliere nome  -->
-            <!-- Mettere qui dentro una checkbox per le offerte -->
+            <label for="prezzoMin" class="form-label">Prezzo minimo</label>
+            <input type="range" class="form-range" min="0" max="100" id="prezzoMin">
+
+            <label for="prezzoMax" class="form-label">Prezzo massimo</label>
+            <input type="range" class="form-range" min="0" max="100" id="prezzoMax">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Prodotto</span>
+                <input type="text" class="form-control" placeholder="PRODOTTO" aria-label="PRODOTTO" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
+                <label class="form-check-label" for="switchCheckChecked">Sconto</label>
+            </div>
+
+
 
         </form>
 
@@ -28,44 +41,60 @@
 
 
     <div class="col-9">
-            <div class="row g-5">
-                <div class="col-4" th:each="p:${listaProdotti}">
+        <div class="row g-5">
+            <div class="col-4" th:each="p:${listaProdotti}">
 
-                    <div class="card" style="width: 25rem;">
-                        <img th:src="${p.imgUrl}" width="300" height="300" class="card-img-top" alt="Non caricata">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${p.nome}"></h5>
-                            <p class="card-text" th:text="${p.descrizione}"></p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                Prezzo: <span th:class="${p.sconto!=0 ? 'text-decoration-line-through' : ''}" th:title="${p.sconto!=0 ? 'Sconto '+ p.sconto*100+'%' : 'prezzo pieno'}" th:text="${p.prezzoUnitario}"></span> &euro;
-                                <span th:if="${p.sconto!=0}">
+                <div class="card" style="width: 25rem;">
+                    <img th:src="${p.imgUrl}" width="300" height="300" class="card-img-top" alt="Non caricata">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${p.nome}"></h5>
+                        <p class="card-text" th:text="${p.descrizione}"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Prezzo: <span th:class="${p.sconto!=0 ? 'text-decoration-line-through' : ''}" th:title="${p.sconto!=0 ? 'Sconto '+ p.sconto*100+'%' : 'prezzo pieno'}" th:text="${p.prezzoUnitario}"></span> &euro;
+                            <span th:if="${p.sconto!=0}">
                                     ->
                                     <span th:text="${#numbers.formatDecimal(p.prezzoUnitarioScontato,1,2,'COMMA')}"></span> &euro;
                                 </span>
-                            </li>
-                        </ul>
-                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Cibo')}">
-                            <li class="list-group-item" >Peso: <span th:text="${p.peso}"></span>Kg</li>
-                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaCibo}"></span></li>
-                            <li class="list-group-item" >Conservazione: <span th:text="${p.getStampaEnum()}"></span></li>
-                        </ul>
-                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Bevanda')}">
-                            <li class="list-group-item" >Volume: <span th:text="${p.volume}"></span>ml</li>
-                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaBevanda}"></span></li>
-                            <li class="list-group-item" >&nbsp;</li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">Aggiungi carrello</a>
-                        </div>
+                        </li>
+                    </ul>
+                    <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Cibo')}">
+                        <li class="list-group-item" >Peso: <span th:text="${p.peso}"></span>Kg</li>
+                        <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaCibo}"></span></li>
+                        <li class="list-group-item" >Conservazione: <span th:text="${p.getStampaEnum()}"></span></li>
+                    </ul>
+                    <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Bevanda')}">
+                        <li class="list-group-item" >Volume: <span th:text="${p.volume}"></span>ml</li>
+                        <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaBevanda}"></span></li>
+                        <li class="list-group-item" >&nbsp;</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Aggiungi carrello</a>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 
 </div>
 
+<script>
+    const prezzoMin = document.getElementById('prezzoMin');
+    const prezzoMax = document.getElementById('prezzoMax');
+
+    prezzoMin.addEventListener('input', function () {
+        if (parseInt(prezzoMin.value) > parseInt(prezzoMax.value)) {
+            prezzoMax.value = prezzoMin.value; // Imposta prezzoMax uguale a prezzoMin
+        }
+    });
+
+    prezzoMax.addEventListener('input', function () {
+        if (parseInt(prezzoMax.value) < parseInt(prezzoMin.value)) {
+            prezzoMin.value = prezzoMax.value; // Imposta prezzoMin uguale a prezzoMax
+        }
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 </html>
