@@ -23,6 +23,7 @@ public abstract class Prodotto extends BaseEntity
 {
 	private String nome;
 	private String descrizione;
+	private String imgUrl;
 	private double prezzoUnitario;
 	private int qnt;
 

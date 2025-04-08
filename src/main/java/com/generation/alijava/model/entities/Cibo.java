@@ -5,6 +5,8 @@ import com.generation.alijava.model.entities.enums.Conservazione;
 import com.generation.alijava.model.entities.enums.TipologiaCibo;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +21,8 @@ import lombok.NoArgsConstructor;
 public class Cibo extends Prodotto
 {
 	private double peso;//kg
+	@Enumerated(EnumType.STRING)
 	private TipologiaCibo tipologiaCibo;
+	@Enumerated(EnumType.STRING)
 	private Conservazione conservazione;
 }
