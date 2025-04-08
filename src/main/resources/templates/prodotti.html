@@ -20,15 +20,19 @@
             <!-- Mettere qui dentro uno slider per scegliere prezzoMin tra 0 e 100  -->
             <!-- Mettere qui dentro un input  per scegliere nome  -->
             <!-- Mettere qui dentro una checkbox per le offerte -->
-            <label for="Prezzo Minimo" class="form-label">Prezzo Minimo</label>
-            <input type="range" class="form-range" min="0" max="100" id="Prezzo Minimo">
+
+<!--            <label for="prezzoMax" class="form-label">Prezzo Massimo: <span id="valPrezzoMax">50</span> €</label>-->
+<!--            <input type="range" class="form-range" min="0" max="100" id="prezzoMax" name="prezzoMax" value="50" oninput="document.getElementById('valPrezzoMax').textContent = this.value">-->
+
+            <label name=for="Prezzo Minimo" class="form-label">Prezzo Minimo</label>
+            <input name ="max" type="range" class="form-range" min="0" max="100" id="Prezzo Minimo">
 
             <label for="Prezzo Massimo" class="form-label ">Prezzo Minimo</label>
-            <input type="range" class="form-range" min="0" max="100" id="Prezzo Massimo">
+            <input name="min" type="range" class="form-range" min="0" max="100" id="Prezzo Massimo">
 
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Cerca</span>
-                <input type="text" class="form-control" placeholder="Nome Prodotto" aria-label="Nome Prodotto" aria-describedby="basic-addon1">
+                <input name="k" type="text" class="form-control" placeholder="Nome Prodotto" aria-label="Nome Prodotto" aria-describedby="basic-addon1">
             </div>
 
             <div class="form-check mt-3">
