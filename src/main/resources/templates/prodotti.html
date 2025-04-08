@@ -16,10 +16,16 @@
     <div class="col-3 bg-gray">
         <h2>FILTRI</h2>
         <form>
-            <!-- Mettere qui dentro uno slider per scegliere prezzoMax tra 0 e 100  -->
-            <!-- Mettere qui dentro uno slider per scegliere prezzoMin tra 0 e 100  -->
-            <!-- Mettere qui dentro un input  per scegliere nome  -->
-            <!-- Mettere qui dentro una checkbox per le offerte -->
+            <label for="customRange1" class="form-label">Prezzo Max</label>
+            <input type="range" class="form-range" id="customRange1" min="0" max="100">
+            <label for="customRange1" class="form-label">Prezzo Min</label>
+            <input type="range" class="form-range" id="customRange2" min="0" max="100">
+            <label for="floatingInputValue" class="pt-2 pb-1">Input con Nome</label>
+            <input type="text" class="form-control" id="floatingInputValue" placeholder="Inserisci nome prodotto">
+            <div class="row w-100 pt-4 ps-3">
+                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btncheck1">Prodotti scontati</label>
+            </div>
 
         </form>
 
