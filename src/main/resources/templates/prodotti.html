@@ -23,27 +23,32 @@
 
     <div class="col-3 bg-gray p-3">
         <h2>FILTRI</h2>
-        <form>
-            <!-- Slider per Prezzo Max -->
-            <label for="prezzoMax" class="form-label">Prezzo Massimo: <span id="valPrezzoMax">50</span> €</label>
-            <input type="range" class="form-range" min="0" max="100" id="prezzoMax" name="prezzoMax" value="50" oninput="document.getElementById('valPrezzoMax').textContent = this.value">
-            <!-- Slider per Prezzo Min -->
-            <label for="prezzoMin" class="form-label">Prezzo Minimo: <span id="valPrezzoMin">0</span> €</label>
-            <input type="range" class="form-range" min="0" max="100" id="prezzoMin" name="prezzoMin" value="0" oninput="document.getElementById('valPrezzoMin').textContent = this.value">
+        <form method="get" action="tuapagina.php">
+            <!-- Slider per Prezzo Massimo -->
+            <label for="prezzoMax" class="form-label">Prezzo Massimo:</label>
+            <input type="range" class="form-range" min="0" max="100" id="prezzoMax" name="prezzoMax" value="100">
+
+            <!-- Slider per Prezzo Minimo -->
+            <label for="prezzoMin" class="form-label">Prezzo Minimo:</label>
+            <input type="range" class="form-range" min="0" max="100" id="prezzoMin" name="prezzoMin" value="0">
+
             <!-- Input per il Nome -->
             <label for="nome" class="form-label mt-3">Nome:</label>
             <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserisci nome">
+
             <!-- Checkbox per le Offerte -->
             <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" id="offerta" name="offerta">
+                <input class="form-check-input" type="checkbox" id="offerta" name="offerta" value="1">
                 <label class="form-check-label" for="offerta">
                     Solo offerte
                 </label>
             </div>
+
             <!-- Pulsante di invio -->
             <button type="submit" class="btn btn-primary mt-3">Applica filtri</button>
         </form>
     </div>
+
 
     <div class="col-9">
             <div class="row g-5">
