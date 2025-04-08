@@ -15,33 +15,30 @@
 
     <div class="col-3 bg-gray">
         <h2>FILTRI</h2>
-        <form>
-            <!-- Mettere qui dentro uno slider per scegliere prezzoMax tra 0 e 100  -->
+        <form action="/shop" method="post">
+            <label for="customRange2" class="form-label">Prezzo Massimo</label>
+            <input name="max" type="range"  class="form-range" min="0" max="20" id="customRange2" th:value="${max!=null ? max : 20}">
             <!-- Mettere qui dentro uno slider per scegliere prezzoMin tra 0 e 100  -->
+            <label for="customRange3" class="form-label">Prezzo Minimo</label>
+            <input name="min"   type="range" class="form-range" min="0" max="20" id="customRange3" th:value="${min!=null ? min : 0}">
             <!-- Mettere qui dentro un input  per scegliere nome  -->
+            <div class="input-group mb-3">
+                <span class="input-group-text">Nome</span>
+                <div class="form-floating">
+                    <input name="k" type="text" class="form-control" id="floatingInputGroup1" th:value="${k}">
+                    <label for="floatingInputGroup1">Nome prodotto</label>
+                </div>
+            </div>
             <!-- Mettere qui dentro una checkbox per le offerte -->
 
-<!--            <label for="prezzoMax" class="form-label">Prezzo Massimo: <span id="valPrezzoMax">50</span> €</label>-->
-<!--            <input type="range" class="form-range" min="0" max="100" id="prezzoMax" name="prezzoMax" value="50" oninput="document.getElementById('valPrezzoMax').textContent = this.value">-->
-
-            <label for="Prezzo Minimo" class="form-label">Prezzo Minimo</label>
-            <input type="range" class="form-range" min="0" max="100" id="Prezzo Minimo">
-
-            <label for="Prezzo Massimo" class="form-label ">Prezzo Minimo</label>
-            <input type="range" class="form-range" min="0" max="100" id="Prezzo Massimo">
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Cerca</span>
-                <input type="text" class="form-control" placeholder="Nome Prodotto" aria-label="Nome Prodotto" aria-describedby="basic-addon1">
-            </div>
-
             <div class="form-check mt-3">
-                <input class="form-check-input" type="checkbox" id="offerta" name="offerta">
+                <input name="offerta" class="form-check-input" type="checkbox" id="offerta" th:checked="${offerta!=null}">
                 <label class="form-check-label" for="offerta">
-                    In Offerta
+                    IN OFFERTA
                 </label>
             </div>
-
+            <input class="btn btn-primary mt-3" type="submit" value="Applica Filtri">
+            <input class="btn btn-primary mt-3 ms-3" type="submit" name="clear" value="Clear">
 
         </form>
 
@@ -50,40 +47,42 @@
 
 
     <div class="col-9">
-            <div class="row g-5">
-                <div class="col-4" th:each="p:${listaProdotti}">
+        <div class="row g-5">
 
-                    <div class="card" style="width: 25rem;">
-                        <img th:src="${p.imgUrl}" width="300" height="300" class="card-img-top" alt="Non caricata">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${p.nome}"></h5>
-                            <p class="card-text" th:text="${p.descrizione}"></p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                Prezzo: <span th:class="${p.sconto!=0 ? 'text-decoration-line-through' : ''}" th:title="${p.sconto!=0 ? 'Sconto '+ p.sconto*100+'%' : 'prezzo pieno'}" th:text="${p.prezzoUnitario}"></span> &euro;
-                                <span th:if="${p.sconto!=0}">
+            <div th:if="${listaProdotti.size()==0}" ><h1 class="text-center mx-auto mt-5">NON CI SONO PRODOTTI CHE RISPETTANO I TUOI CRITERI</h1></div>
+            <div class="col-4" th:each="p:${listaProdotti}">
+
+                <div class="card" style="width: 25rem;">
+                    <img th:src="${p.imgUrl}" width="300" height="300" class="card-img-top" alt="Non caricata">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${p.nome}"></h5>
+                        <p class="card-text" th:text="${p.descrizione}"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Prezzo: <span th:class="${p.sconto!=0 ? 'text-decoration-line-through' : ''}" th:title="${p.sconto!=0 ? 'Sconto '+ p.sconto*100+'%' : 'prezzo pieno'}" th:text="${p.prezzoUnitario}"></span> &euro;
+                            <span th:if="${p.sconto!=0}">
                                     ->
                                     <span th:text="${#numbers.formatDecimal(p.prezzoUnitarioScontato,1,2,'COMMA')}"></span> &euro;
                                 </span>
-                            </li>
-                        </ul>
-                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Cibo')}">
-                            <li class="list-group-item" >Peso: <span th:text="${p.peso}"></span>Kg</li>
-                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaCibo}"></span></li>
-                            <li class="list-group-item" >Conservazione: <span th:text="${p.getStampaEnum()}"></span></li>
-                        </ul>
-                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Bevanda')}">
-                            <li class="list-group-item" >Volume: <span th:text="${p.volume}"></span>ml</li>
-                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaBevanda}"></span></li>
-                            <li class="list-group-item" >&nbsp;</li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">Aggiungi carrello</a>
-                        </div>
+                        </li>
+                    </ul>
+                    <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Cibo')}">
+                        <li class="list-group-item" >Peso: <span th:text="${p.peso}"></span>Kg</li>
+                        <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaCibo}"></span></li>
+                        <li class="list-group-item" >Conservazione: <span th:text="${p.getStampaEnum()}"></span></li>
+                    </ul>
+                    <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Bevanda')}">
+                        <li class="list-group-item" >Volume: <span th:text="${p.volume}"></span>ml</li>
+                        <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaBevanda}"></span></li>
+                        <li class="list-group-item" >&nbsp;</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Aggiungi carrello</a>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 
 </div>
