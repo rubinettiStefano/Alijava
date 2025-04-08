@@ -60,6 +60,11 @@ public abstract class Prodotto extends BaseEntity
 	{
 		return qnt-items.stream().mapToInt(i->i.getQnt()).sum();
 	}
+
+	public String tipoConcreto()
+	{
+		return this.getClass().getSimpleName();
+	}
 }
 
 

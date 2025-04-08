@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,15 +11,46 @@
 
 
 
-<div class="row">
+<div class="row w-100 pt-4 ps-3">
 
     <div class="col-3 bg-gray">
         <h2>FILTRI</h2>
     </div>
     <div class="col-9">
-            <p th:each="p : ${listaProdotti}">
-                <span th:text="${p.nome}"></span>
-            </p>
+            <div class="row g-5">
+                <div class="col-4" th:each="p:${listaProdotti}">
+
+                    <div class="card" style="width: 25rem;">
+                        <img th:src="${p.imgUrl}" width="300" height="300" class="card-img-top" alt="Non caricata">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${p.nome}"></h5>
+                            <p class="card-text" th:text="${p.descrizione}"></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                Prezzo: <span th:class="${p.sconto!=0 ? 'text-decoration-line-through' : ''}" th:title="${p.sconto!=0 ? 'Sconto '+ p.sconto*100+'%' : 'prezzo pieno'}" th:text="${p.prezzoUnitario}"></span> &euro;
+                                <span th:if="${p.sconto!=0}">
+                                    ->
+                                    <span th:text="${#numbers.formatDecimal(p.prezzoUnitarioScontato,1,2,'COMMA')}"></span> &euro;
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Cibo')}">
+                            <li class="list-group-item" >Peso: <span th:text="${p.peso}"></span>Kg</li>
+                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaCibo}"></span></li>
+                            <li class="list-group-item" >Conservazione: <span th:text="${p.getStampaEnum()}"></span></li>
+                        </ul>
+                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Bevanda')}">
+                            <li class="list-group-item" >Volume: <span th:text="${p.volume}"></span>ml</li>
+                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaBevanda}"></span></li>
+                            <li class="list-group-item" >&nbsp;</li>
+                        </ul>
+                        <div class="card-body">
+                            <a href="#" class="card-link">Aggiungi carrello</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 
 </div>
