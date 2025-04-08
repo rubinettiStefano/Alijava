@@ -13,7 +13,7 @@
 
 <div class="row g-5 ms-2 mt-2">
 
-    <div class="col-4" th:each="p:${tuttiTicket}">
+    <div class="col-4" th:each="p:${tickets}">
 
         <div class="card border border-2 border-primary rounded-4 shadow-sm" style="width: 25rem;">
             <h5 class="card-title pt-2">
@@ -29,17 +29,6 @@
             </h6>
 
             <div class="card-body">
-                <div class="form-check form-switch">
-                    <form action="/listaTicket" method="post">
-                    <input class="form-check-input" type="checkbox" role="switch"
-                           id="risolto" name="risolto"
-                           th:checked="${p.risolto}"/>
-                    <label class="form-check-label" for="risolto">Risolto</label>
-
-                        <input type="hidden" name="ticketId" th:value="${p.id}">
-                        <button type="submit" class="btn btn-primary">Aggiorna Ticket</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>

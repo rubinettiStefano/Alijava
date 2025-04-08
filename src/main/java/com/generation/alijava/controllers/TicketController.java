@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class TicketController
 {
@@ -44,7 +47,54 @@ public class TicketController
 	@GetMapping("/listaTicket")
 	public String tuttiTicket(Model m)
 	{
-		m.addAttribute("listaTicket",dao.findAll());
+		m.addAttribute("tuttiTicket",dao.findAll());
 		return ("/mostraTickets");
+	}
+
+	@PostMapping("/listaTicket")
+	public String updateTicket(
+			@RequestParam(required = false) String risolto,
+			@RequestParam("ticketId") Long ticketId,
+			Model m)
+	{
+		Ticket ticket = dao.findById(ticketId).orElse(null);
+
+		if(risolto != null && risolto.equals("on"))
+			ticket.setRisolto(true);
+		 else
+			ticket.setRisolto(false);
+
+		dao.save(ticket);
+		m.addAttribute("ticket", ticket);
+		return "redirect:/listaTicket";
+	}
+
+	@GetMapping("/ticketrisolti")
+	public String ticketrisolti(Model m)
+	{
+		List<Ticket> risolti = new ArrayList<>();
+
+		for (Ticket ticket : dao.findAll())
+			if (ticket.isRisolto())
+				risolti.add(ticket);
+
+		m.addAttribute("tickets", risolti);
+
+		return "ticketfiltrati";
+	}
+
+	@GetMapping("/ticketnorisolto")
+	public String ticketNonRisolti(Model m)
+	{
+		List<Ticket> nonRisolti = new ArrayList<>();
+			for (Ticket ticket : dao.findAll())
+				if (!ticket.isRisolto())
+					nonRisolti.add(ticket);
+
+
+
+		m.addAttribute("tickets", nonRisolti);
+
+		return "ticketfiltrati";
 	}
 }
