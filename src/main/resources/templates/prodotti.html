@@ -15,6 +15,7 @@
 
     <div class="col-3 bg-gray">
         <h2>FILTRI</h2>
+
         <form action="/shop" method="post">
             <label for="customRange2" class="form-label">Prezzo Massimo</label>
             <input name="max" type="range"  class="form-range" min="0" max="20" id="customRange2" th:value="${max!=null ? max : 20}">
@@ -25,27 +26,28 @@
             <div class="input-group mb-3">
                 <span class="input-group-text">Nome</span>
                 <div class="form-floating">
+
                     <input name="k" type="text" class="form-control" id="floatingInputGroup1" th:value="${k}">
                     <label for="floatingInputGroup1">Nome prodotto</label>
                 </div>
             </div>
             <!-- Mettere qui dentro una checkbox per le offerte -->
 
+
             <div class="form-check mt-3">
                 <input name="offerta" class="form-check-input" type="checkbox" id="offerta" th:checked="${offerta!=null}">
+
                 <label class="form-check-label" for="offerta">
                     IN OFFERTA
                 </label>
             </div>
+
             <input class="btn btn-primary mt-3" type="submit" value="Applica Filtri">
             <input class="btn btn-primary mt-3 ms-3" type="submit" name="clear" value="Clear">
 
+
         </form>
-
     </div>
-
-
-
     <div class="col-9">
             <div class="row g-5">
 
