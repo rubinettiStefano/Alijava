@@ -17,16 +17,29 @@
         <h2>FILTRI</h2>
         <form>
             <!-- Mettere qui dentro uno slider per scegliere prezzoMax tra 0 e 100  -->
+            <label for="customRange2" class="form-label">Prezzo Massimo</label>
+            <input type="range" class="form-range" min="0" max="100" id="customRange2">
             <!-- Mettere qui dentro uno slider per scegliere prezzoMin tra 0 e 100  -->
+            <label for="customRange3" class="form-label">Prezzo Minimo</label>
+            <input type="range" class="form-range" min="0" max="100" id="customRange3">
             <!-- Mettere qui dentro un input  per scegliere nome  -->
+            <div class="input-group mb-3">
+                <span class="input-group-text">Nome</span>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Username">
+                    <label for="floatingInputGroup1">Nome prodotto</label>
+                </div>
+            </div>
             <!-- Mettere qui dentro una checkbox per le offerte -->
-
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="offerta" name="offerta">
+                <label class="form-check-label" for="offerta">
+                    IN OFFERTA
+                </label>
+            </div>
+            <a class="btn btn-primary mt-3" href="#" role="button">Applica Filtri</a>
         </form>
-
     </div>
-
-
-
     <div class="col-9">
             <div class="row g-5">
                 <div class="col-4" th:each="p:${listaProdotti}">
