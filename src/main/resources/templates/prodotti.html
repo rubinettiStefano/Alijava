@@ -2,21 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
 <head>
     <style>
+        input[type="range"]::-webkit-slider-thumb {
+            background-color: var(--thumb-color, #ffffff);
+            transition: background-color 0.3s ease;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
 
+        input[type="range"]::-moz-range-thumb {
+            background-color: var(--thumb-color, #ffffff);
+            transition: background-color 0.3s ease;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
     </style>
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <body>
-<!-- Prende dal file fragments il div chiamato navbar e lo sostituisce a questo -->
 <div th:replace="fragments :: navbar"></div>
 
-
-
 <div class="row w-100 pt-4 ps-3">
-
-
     <div class="col-3 bg-gray">
         <h2>FILTRI</h2>
         <form>
@@ -33,17 +42,11 @@
 
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
-                <label class="form-check-label" for="switchCheckChecked">Scontato</label>
+                <label class="form-check-label" for="switchCheckChecked">Sconto</label>
                 <button type="submit" class="btn btn-primary" style="float: right;">Sono insicuro</button>
             </div>
-
-
-
         </form>
-
     </div>
-
-
 
     <div class="col-9">
         <div class="row g-5">
@@ -81,25 +84,36 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
     const prezzoMin = document.getElementById('prezzoMin');
     const prezzoMax = document.getElementById('prezzoMax');
 
-    prezzoMin.addEventListener('input', function () {
-        if (parseInt(prezzoMin.value) > parseInt(prezzoMax.value)) {
-            prezzoMax.value = prezzoMin.value;
-        }
-    });
+    function updateThumbColor(input) {
+        const value = input.value;
+        const red = Math.round((value / 100) * 255);
+        const blue = Math.round(((100 - value) / 100) * 255);
+        input.style.setProperty('--thumb-color', `rgb(${red}, 0, ${blue})`);
+    }
 
-    prezzoMax.addEventListener('input', function () {
-        if (parseInt(prezzoMax.value) < parseInt(prezzoMin.value)) {
-            prezzoMin.value = prezzoMax.value;
+    function handleInput(input) {
+        if (input === prezzoMin && parseInt(input.value) > parseInt(prezzoMax.value)) {
+            prezzoMax.value = input.value;
+            updateThumbColor(prezzoMax);
+        } else if (input === prezzoMax && parseInt(input.value) < parseInt(prezzoMin.value)) {
+            prezzoMin.value = input.value;
+            updateThumbColor(prezzoMin);
         }
+        updateThumbColor(input);
+    }
+
+    [prezzoMin, prezzoMax].forEach(input => {
+        input.addEventListener('input', () => handleInput(input));
+        updateThumbColor(input);
     });
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 </html>
