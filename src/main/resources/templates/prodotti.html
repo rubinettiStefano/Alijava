@@ -16,7 +16,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-        }
+        }   
     </style>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -30,47 +30,32 @@
         <h2>FILTRI</h2>
 
         <form action="/shop" method="post">
-            <label for="customRange2" class="form-label">Prezzo Massimo</label>
+            <h4 for="customRange3" class="form-label">Prezzo Minimo (0€)</h4>
+            <input name="min" type="range" class="form-range" min="0" max="20" id="customRange3" th:value="${min!=null ? min : 0}">
+
+            <h4 for="customRange2" class="form-label">Prezzo Massimo (20€)</h4>
             <input name="max" type="range"  class="form-range" min="0" max="20" id="customRange2" th:value="${max!=null ? max : 20}">
-            <!-- Mettere qui dentro uno slider per scegliere prezzoMin tra 0 e 100  -->
-            <label for="customRange3" class="form-label">Prezzo Minimo</label>
-            <input name="min"   type="range" class="form-range" min="0" max="20" id="customRange3" th:value="${min!=null ? min : 0}">
-            <!-- Mettere qui dentro un input  per scegliere nome  -->
-            <div class="input-group mb-3">
-                <span class="input-group-text">Nome</span>
-                <div class="form-floating">
-                    <input name="k" type="text" class="form-control" id="floatingInputGroup1" th:value="${k}">
-                    <label for="floatingInputGroup1">Nome prodotto</label>
-                </div>
-            </div>
-            <!-- Mettere qui dentro una checkbox per le offerte -->
-
-            <div class="form-check mt-3">
-                <input name="offerta" class="form-check-input" type="checkbox" id="offerta" th:checked="${offerta!=null}">
-                <label class="form-check-label" for="offerta">
-                    IN OFFERTA
-                </label>
-            </div>
-            <input class="btn btn-primary mt-3" type="submit" value="Applica Filtri">
-            <input class="btn btn-primary mt-3 ms-3" type="submit" name="clear" value="Clear">
-
-        </form>
-
-    </div>
-
 
             <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="NOME PRODOTTO"
+                       aria-label="NOME PRODOTTO" aria-describedby="basic-addon1"
+                       name="k" th:value="${k}">
                 <span class="input-group-text" id="basic-addon1">Nome Prodotto</span>
-                <input type="text" class="form-control" placeholder="NOME PRODOTTO" aria-label="NOME PRODOTTO" aria-describedby="basic-addon1">
             </div>
 
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked>
-                <label class="form-check-label" for="switchCheckChecked">Sconto</label>
-                <button type="submit" class="btn btn-primary" style="float: right;">Sono insicuro</button>
+                <input class="form-check-input" type="checkbox" role="switch"
+                       id="offerta" name="offerta"
+                       th:checked="${offerta!=null}">
+                <label class="form-check-label" for="offerta">Sconto</label>
+                <button type="submit" class="btn btn-primary ms-3" style="float: right;" name="clear">Clear</button>
+                <button type="submit" class="btn btn-primary" style="float: right;" value="Applica Filtro">Applica filtro</button>
             </div>
+
         </form>
+
     </div>
+
 
     <div class="col-9">
 
@@ -114,13 +99,14 @@
 </div>
 
 <script>
-    const prezzoMin = document.getElementById('prezzoMin');
-    const prezzoMax = document.getElementById('prezzoMax');
+    const prezzoMin = document.getElementById('customRange3');
+    const prezzoMax = document.getElementById('customRange2');
 
     function updateThumbColor(input) {
         const value = input.value;
-        const red = Math.round((value / 100) * 255);
-        const blue = Math.round(((100 - value) / 100) * 255);
+        const max = input.getAttribute('max');
+        const red = Math.round((value / max) * 255);
+        const blue = Math.round(((max - value) / max) * 255);
         input.style.setProperty('--thumb-color', `rgb(${red}, 0, ${blue})`);
     }
 
@@ -137,7 +123,7 @@
 
     [prezzoMin, prezzoMax].forEach(input => {
         input.addEventListener('input', () => handleInput(input));
-        updateThumbColor(input);
+        updateThumbColor(input); // Inizializza il colore all'avvio
     });
 </script>
 
