@@ -59,6 +59,11 @@ public abstract class Prodotto extends BaseEntity
 	{
 		return 0;
 	}
+
+	public String tipoConcreto()
+	{
+		return this.getClass().getSimpleName();
+	}
 }
 
 
