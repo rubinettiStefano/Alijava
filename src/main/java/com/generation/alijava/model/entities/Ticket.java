@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 public class Ticket extends BaseEntity
 {
 	private String email,titolo,contenuto;
+	private boolean risolto;
 }

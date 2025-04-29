@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <title>tanti ticketss</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+    <style>
+        .ticket
+        {
+            background: linear-gradient(135deg, #1f1c2c 0%, #928dab 50%, #1f1c2c 100%);
+        }
+        .switch-orange:checked {
+            background-color: #f39c12;
+            border-color: #f39c12;
+        }
+
+        .form-check-input.switch-grande {
+            transform: scale(1.5);
+            margin-right: 0.5rem;
+        }
+
+        .form-check-label {
+            vertical-align: middle;
+        }
+
+        .ticket-checked {
+            border: 2px solid #28a745; /* verde */
+        }
+
+        .ticket-unchecked {
+            border: 2px solid #dc3545; /* rosso */
+        }
+
+        .switch-verde:checked {
+            background-color: #28a745 !important; /* verde */
+            border-color: #28a745 !important;
+        }
+
+        .switch-rosso:not(:checked) {
+            background-color: #dc3545 !important; /* rosso */
+            border-color: #dc3545 !important;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="fragments :: nuovabar"></div>
+
+<div class="row g-5 ms-2 mt-2">
+
+    <div class="col-4" th:each="p:${tuttiTicket}">
+
+        <div class="ticket card rounded-4 shadow-sm"
+             th:classappend="${p.risolto} ? 'ticket-checked' : 'ticket-unchecked'"
+             style="width: 25rem;">
+            <h5 class="card-title pt-2">
+                <strong style="color: #f8d210;">
+                    <span th:text="${p.titolo}" style="display: block; text-align: center;"></span>
+                </strong>
+            </h5>
+
+            <h6 class="card-text p-3">
+                <strong style="color: #d6d6e7;">
+                    <span th:text="${p.contenuto}"></span>
+                </strong>
+            </h6>
+
+            <div class="card-body">
+                <div class="form-check form-switch ">
+                    <form action="/listaTicket" method="post">
+                        <input class="form-check-input switch-grande"
+                               th:classappend="${p.risolto} ? 'switch-verde' : 'switch-rosso'"
+                               type="checkbox" role="switch"
+                               id="risolto" name="risolto"
+                               th:checked="${p.risolto}"/>
+                    <label class="form-check-label" for="risolto"></label>
+
+                        <input type="hidden" name="ticketId" th:value="${p.id}">
+                        <button type="submit"
+                                class="btn btn-primary float-end px-3 py-1">
+                            Aggiorna Ticket
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

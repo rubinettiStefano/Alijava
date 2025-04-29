@@ -1,91 +1,131 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
 <head>
+    <style>
+        input[type="range"]::-webkit-slider-thumb {
+            background-color: var(--thumb-color, #ffffff);
+            transition: background-color 0.3s ease;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            background-color: var(--thumb-color, #ffffff);
+            transition: background-color 0.3s ease;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }   
+    </style>
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <body>
-<!-- Prende dal file fragments il div chiamato navbar e lo sostituisce a questo -->
 <div th:replace="fragments :: navbar"></div>
 
-
-
 <div class="row w-100 pt-4 ps-3">
-
     <div class="col-3 bg-gray">
         <h2>FILTRI</h2>
-        <form action="/shop" method="post">
-            <label for="customRange2" class="form-label">Prezzo Massimo</label>
-            <input name="max" type="range"  class="form-range" min="0" max="20" id="customRange2" th:value="${max!=null ? max : 20}">
-            <!-- Mettere qui dentro uno slider per scegliere prezzoMin tra 0 e 100  -->
-            <label for="customRange3" class="form-label">Prezzo Minimo</label>
-            <input name="min"   type="range" class="form-range" min="0" max="20" id="customRange3" th:value="${min!=null ? min : 0}">
-            <!-- Mettere qui dentro un input  per scegliere nome  -->
-            <div class="input-group mb-3">
-                <span class="input-group-text">Nome</span>
-                <div class="form-floating">
-                    <input name="k" type="text" class="form-control" id="floatingInputGroup1" th:value="${k}">
-                    <label for="floatingInputGroup1">Nome prodotto</label>
-                </div>
-            </div>
-            <!-- Mettere qui dentro una checkbox per le offerte -->
 
-            <div class="form-check mt-3">
-                <input name="offerta" class="form-check-input" type="checkbox" id="offerta" th:checked="${offerta!=null}">
-                <label class="form-check-label" for="offerta">
-                    IN OFFERTA
-                </label>
+        <form action="/shop" method="post">
+            <h4 for="customRange3" class="form-label">Prezzo Minimo (0€)</h4>
+            <input name="min" type="range" class="form-range" min="0" max="20" id="customRange3" th:value="${min!=null ? min : 0}">
+
+            <h4 for="customRange2" class="form-label">Prezzo Massimo (20€)</h4>
+            <input name="max" type="range"  class="form-range" min="0" max="20" id="customRange2" th:value="${max!=null ? max : 20}">
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="NOME PRODOTTO"
+                       aria-label="NOME PRODOTTO" aria-describedby="basic-addon1"
+                       name="k" th:value="${k}">
+                <span class="input-group-text" id="basic-addon1">Nome Prodotto</span>
             </div>
-            <input class="btn btn-primary mt-3" type="submit" value="Applica Filtri">
-            <input class="btn btn-primary mt-3 ms-3" type="submit" name="clear" value="Clear">
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch"
+                       id="offerta" name="offerta"
+                       th:checked="${offerta!=null}">
+                <label class="form-check-label" for="offerta">Sconto</label>
+                <button type="submit" class="btn btn-primary ms-3" style="float: right;" name="clear">Clear</button>
+                <button type="submit" class="btn btn-primary" style="float: right;" value="Applica Filtro">Applica filtro</button>
+            </div>
 
         </form>
 
     </div>
 
 
-
     <div class="col-9">
+
             <div class="row g-5">
 
                 <div th:if="${listaProdotti.size()==0}" ><h1 class="text-center mx-auto mt-5">NON CI SONO PRODOTTI CHE RISPETTANO I TUOI CRITERI</h1></div>
                 <div class="col-4" th:each="p:${listaProdotti}">
 
-                    <div class="card" style="width: 25rem;">
-                        <img th:src="${p.imgUrl}" width="300" height="300" class="card-img-top" alt="Non caricata">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${p.nome}"></h5>
-                            <p class="card-text" th:text="${p.descrizione}"></p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                Prezzo: <span th:class="${p.sconto!=0 ? 'text-decoration-line-through' : ''}" th:title="${p.sconto!=0 ? 'Sconto '+ p.sconto*100+'%' : 'prezzo pieno'}" th:text="${p.prezzoUnitario}"></span> &euro;
-                                <span th:if="${p.sconto!=0}">
+                <div class="card" style="width: 25rem;">
+                    <img th:src="${p.imgUrl}" width="300" height="300" class="card-img-top" alt="Non caricata">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${p.nome}"></h5>
+                        <p class="card-text" th:text="${p.descrizione}"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Prezzo: <span th:class="${p.sconto!=0 ? 'text-decoration-line-through' : ''}" th:title="${p.sconto!=0 ? 'Sconto '+ p.sconto*100+'%' : 'prezzo pieno'}" th:text="${p.prezzoUnitario}"></span> &euro;
+                            <span th:if="${p.sconto!=0}">
                                     ->
                                     <span th:text="${#numbers.formatDecimal(p.prezzoUnitarioScontato,1,2,'COMMA')}"></span> &euro;
                                 </span>
-                            </li>
-                        </ul>
-                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Cibo')}">
-                            <li class="list-group-item" >Peso: <span th:text="${p.peso}"></span>Kg</li>
-                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaCibo}"></span></li>
-                            <li class="list-group-item" >Conservazione: <span th:text="${p.getStampaEnum()}"></span></li>
-                        </ul>
-                        <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Bevanda')}">
-                            <li class="list-group-item" >Volume: <span th:text="${p.volume}"></span>ml</li>
-                            <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaBevanda}"></span></li>
-                            <li class="list-group-item" >&nbsp;</li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="#" class="card-link">Aggiungi carrello</a>
-                        </div>
+                        </li>
+                    </ul>
+                    <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Cibo')}">
+                        <li class="list-group-item" >Peso: <span th:text="${p.peso}"></span>Kg</li>
+                        <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaCibo}"></span></li>
+                        <li class="list-group-item" >Conservazione: <span th:text="${p.getStampaEnum()}"></span></li>
+                    </ul>
+                    <ul class="list-group list-group-flush" th:if="${p.tipoConcreto().equals('Bevanda')}">
+                        <li class="list-group-item" >Volume: <span th:text="${p.volume}"></span>ml</li>
+                        <li class="list-group-item" >Tipo: <span th:text="${p.tipologiaBevanda}"></span></li>
+                        <li class="list-group-item" >&nbsp;</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Aggiungi carrello</a>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-
 </div>
+
+<script>
+    const prezzoMin = document.getElementById('customRange3');
+    const prezzoMax = document.getElementById('customRange2');
+
+    function updateThumbColor(input) {
+        const value = input.value;
+        const max = input.getAttribute('max');
+        const red = Math.round((value / max) * 255);
+        const blue = Math.round(((max - value) / max) * 255);
+        input.style.setProperty('--thumb-color', `rgb(${red}, 0, ${blue})`);
+    }
+
+    function handleInput(input) {
+        if (input === prezzoMin && parseInt(input.value) > parseInt(prezzoMax.value)) {
+            prezzoMax.value = input.value;
+            updateThumbColor(prezzoMax);
+        } else if (input === prezzoMax && parseInt(input.value) < parseInt(prezzoMin.value)) {
+            prezzoMin.value = input.value;
+            updateThumbColor(prezzoMin);
+        }
+        updateThumbColor(input);
+    }
+
+    [prezzoMin, prezzoMax].forEach(input => {
+        input.addEventListener('input', () => handleInput(input));
+        updateThumbColor(input); // Inizializza il colore all'avvio
+    });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
